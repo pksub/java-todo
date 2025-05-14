@@ -14,6 +14,8 @@
 - **JWT**: 0.12.3
 - **Lombok**: 코드 간소화
 - **JUnit 5**: 테스트 프레임워크
+- **IDE**: InteliJ IDEA, vscode
+- **DB**: SQLite , JPA
 
 ---
 
@@ -40,110 +42,6 @@ Gradle을 사용하여 의존성을 설치합니다.
 ```bash
 ./gradlew bootRun
 ```
-
-### 5. **테스트 실행**
-```bash
-
-./gradlew test --tests --info "com.example.todo.service.LoginTest"
-./gradlew test --tests --info "com.example.todo.service.UserServiceTest" 
-./gradlew test --tests --info "com.example.todo.service.TodoServiceTest" 
-
-```
-## 테스트 설명
-
-### loginTest.java 설명
-### 1. `signupTest`
-    - 목적: 정상적인 회원가입 요청을 테스트.
-    - 검증: 상태 코드가 200 OK인지 확인.
-
-### 2. `signupWithExistingUsernameTest`
-    - 목적: 이미 존재하는 사용자 이름으로 회원가입 시도 시 동작을 테스트.
-    - 검증: 상태 코드가 400 Bad Request인지 확인.
-
-### 3. `signupWithoutUsernameTest`
-    - 목적: 사용자 이름 없이 회원가입 시도 시 동작을 테스트.
-    - 검증: 상태 코드가 400 Bad Request인지 확인.
-    
-### 4. `signupWithoutPasswordTest`
-    - 목적: 비밀번호 없이 회원가입 시도 시 동작을 테스트.
-    - 검증:상태 코드가 400 Bad Request인지 확인.
-
-### 5. `getUserNotJwtTest`
-    - 목적: 사용자 jwt 토큰 없이 회원조회 시 동작을 테스트.
-    - 검증: 상태 코드가 401 UNAUTHORIZED 인지 확인.
---- 
-### UserServiceTest
-### 1. `joinProcess`
-- 목적: 새로운 사용자를 등록하는 로직을 테스트.
-- 검증:
-  - 사용자 정보가 올바르게 저장되었는지 확인.
-  - 저장된 사용자 정보(`username`, `password`, `role`)가 기대값과 일치하는지 확인.
-- 주요 동작:
-  - `userRepository.save()` 메서드 호출 여부를 검증.
-
-### 2. `updateUser`
-- 목적: 기존 사용자의 정보를 업데이트하는 로직을 테스트.
-- 검증:
-  - 사용자 정보가 업데이트되었는지 확인.
-  - `userRepository.saveAndFlush()` 메서드 호출 여부를 검증.
-
-### 3. `deleteUser`
-- 목적: 특정 사용자를 삭제하는 로직을 테스트.
-- 검증:
-  - 사용자가 삭제되었는지 확인.
-  - `userRepository.delete()` 메서드 호출 여부를 검증.
-
-### 4. `getUserDetail`
-- 목적: 특정 사용자의 상세 정보를 조회하는 로직을 테스트.
-- 검증:
-  - 반환된 사용자 정보가 기대값과 일치하는지 확인.
-  - `userRepository.findByUsername()` 메서드 호출 여부를 검증.
-
----
-
-## TodoServiceTest
-
-### 1. `createTodo`
-- 목적: 새로운 TODO을 생성하고 저장하는 로직을 테스트.
-- 검증:
-  - 생성된 TODO이 데이터베이스에 저장되었는지 확인.
-  - `todoRepository.save()` 메서드 호출 여부를 검증.
-
-### 2. `getTodosByUser`
-- 목적: 특정 사용자의 모든 TODO을 조회하는 로직을 테스트.
-- 검증:
-  - 반환된 TODO 목록이 기대값과 일치하는지 확인.
-  - `todoRepository.findTodoByUserId()` 메서드 호출 여부를 검증.
-
-### 3. `searchTodosByKeywordAndUser`
-- 목적: 특정 키워드로 TODO을 검색하는 로직을 테스트.
-- 검증:
-  - 반환된 TODO 목록이 키워드와 일치하는지 확인.
-  - `todoRepository.findByTitleContainingOrDescriptionContainingAndUser()` 메서드 호출 여부를 검증.
-
-### 4. `updateTodo`
-- 목적: 특정 TODO을 업데이트하는 로직을 테스트.
-- 검증:
-  - 업데이트된 TODO의 제목과 설명이 기대값과 일치하는지 확인.
-  - `todoRepository.findByIdAndUserId()` 및 `todoRepository.save()` 메서드 호출 여부를 검증.
-
-### 5. `deleteTodo`
-- 목적: 특정 TODO을 삭제하는 로직을 테스트.
-- 검증:
-  - TODO이 삭제되었는지 확인.
-  - `todoRepository.findByIdAndUserId()` 및 `todoRepository.delete()` 메서드 호출 여부를 검증.
-
----
-
-## 공통 사항
-- **Mocking**:
-  - `@Mock`을 사용하여 `UserRepository`와 `TodoRepository`를 모킹.
-  - `@InjectMocks`를 사용하여 `UserService`와 `TodoService`에 모킹된 객체를 주입.
-- 검증:
-  - `verify()`를 사용하여 특정 메서드가 호출되었는지 확인.
-  - `assertNotNull`, `assertEquals` 등을 사용하여 반환값 검증.  
-
----
 
 ## 📚 API 명세 요약
 
@@ -294,6 +192,110 @@ Gradle을 사용하여 의존성을 설치합니다.
 - **Response**:
   - `200 OK`: 관리자 페이지 접근 성공
   - `403 Forbidden`: 권한 부족
+
+---
+
+### **테스트 실행**
+```bash
+
+./gradlew test --tests --info "com.example.todo.service.LoginTest"
+./gradlew test --tests --info "com.example.todo.service.UserServiceTest" 
+./gradlew test --tests --info "com.example.todo.service.TodoServiceTest" 
+
+```
+## 테스트 설명
+
+### loginTest.java 설명
+### 1. `signupTest`
+    - 목적: 정상적인 회원가입 요청을 테스트.
+    - 검증: 상태 코드가 200 OK인지 확인.
+
+### 2. `signupWithExistingUsernameTest`
+    - 목적: 이미 존재하는 사용자 이름으로 회원가입 시도 시 동작을 테스트.
+    - 검증: 상태 코드가 400 Bad Request인지 확인.
+
+### 3. `signupWithoutUsernameTest`
+    - 목적: 사용자 이름 없이 회원가입 시도 시 동작을 테스트.
+    - 검증: 상태 코드가 400 Bad Request인지 확인.
+    
+### 4. `signupWithoutPasswordTest`
+    - 목적: 비밀번호 없이 회원가입 시도 시 동작을 테스트.
+    - 검증:상태 코드가 400 Bad Request인지 확인.
+
+### 5. `getUserNotJwtTest`
+    - 목적: 사용자 jwt 토큰 없이 회원조회 시 동작을 테스트.
+    - 검증: 상태 코드가 401 UNAUTHORIZED 인지 확인.
+--- 
+### UserServiceTest
+### 1. `joinProcess`
+- 목적: 새로운 사용자를 등록하는 로직을 테스트.
+- 검증:
+  - 사용자 정보가 올바르게 저장되었는지 확인.
+  - 저장된 사용자 정보(`username`, `password`, `role`)가 기대값과 일치하는지 확인.
+- 주요 동작:
+  - `userRepository.save()` 메서드 호출 여부를 검증.
+
+### 2. `updateUser`
+- 목적: 기존 사용자의 정보를 업데이트하는 로직을 테스트.
+- 검증:
+  - 사용자 정보가 업데이트되었는지 확인.
+  - `userRepository.saveAndFlush()` 메서드 호출 여부를 검증.
+
+### 3. `deleteUser`
+- 목적: 특정 사용자를 삭제하는 로직을 테스트.
+- 검증:
+  - 사용자가 삭제되었는지 확인.
+  - `userRepository.delete()` 메서드 호출 여부를 검증.
+
+### 4. `getUserDetail`
+- 목적: 특정 사용자의 상세 정보를 조회하는 로직을 테스트.
+- 검증:
+  - 반환된 사용자 정보가 기대값과 일치하는지 확인.
+  - `userRepository.findByUsername()` 메서드 호출 여부를 검증.
+
+---
+
+## TodoServiceTest
+
+### 1. `createTodo`
+- 목적: 새로운 TODO을 생성하고 저장하는 로직을 테스트.
+- 검증:
+  - 생성된 TODO이 데이터베이스에 저장되었는지 확인.
+  - `todoRepository.save()` 메서드 호출 여부를 검증.
+
+### 2. `getTodosByUser`
+- 목적: 특정 사용자의 모든 TODO을 조회하는 로직을 테스트.
+- 검증:
+  - 반환된 TODO 목록이 기대값과 일치하는지 확인.
+  - `todoRepository.findTodoByUserId()` 메서드 호출 여부를 검증.
+
+### 3. `searchTodosByKeywordAndUser`
+- 목적: 특정 키워드로 TODO을 검색하는 로직을 테스트.
+- 검증:
+  - 반환된 TODO 목록이 키워드와 일치하는지 확인.
+  - `todoRepository.findByTitleContainingOrDescriptionContainingAndUser()` 메서드 호출 여부를 검증.
+
+### 4. `updateTodo`
+- 목적: 특정 TODO을 업데이트하는 로직을 테스트.
+- 검증:
+  - 업데이트된 TODO의 제목과 설명이 기대값과 일치하는지 확인.
+  - `todoRepository.findByIdAndUserId()` 및 `todoRepository.save()` 메서드 호출 여부를 검증.
+
+### 5. `deleteTodo`
+- 목적: 특정 TODO을 삭제하는 로직을 테스트.
+- 검증:
+  - TODO이 삭제되었는지 확인.
+  - `todoRepository.findByIdAndUserId()` 및 `todoRepository.delete()` 메서드 호출 여부를 검증.
+
+---
+
+## 공통 사항
+- **Mocking**:
+  - `@Mock`을 사용하여 `UserRepository`와 `TodoRepository`를 모킹.
+  - `@InjectMocks`를 사용하여 `UserService`와 `TodoService`에 모킹된 객체를 주입.
+- 검증:
+  - `verify()`를 사용하여 특정 메서드가 호출되었는지 확인.
+  - `assertNotNull`, `assertEquals` 등을 사용하여 반환값 검증.  
 
 ---
 
