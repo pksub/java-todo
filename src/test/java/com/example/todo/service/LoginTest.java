@@ -184,8 +184,8 @@ class LoginTest {
 
     // JWT 토큰 없는 User Get Test
     @Test
-    void getCuUserNotJwtTest() {
-        log.info("테스트 시작: getCuUserNotJwtTest");
+    void getUserNotJwtTest() {
+        log.info("테스트 시작: getUserNotJwtTest");
 
         // given
         String currentUserUrl = "http://localhost:" + randomServerPort + "/users/me";
@@ -217,6 +217,6 @@ class LoginTest {
         // then
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.UNAUTHORIZED);
 
-        log.info("테스트 끝: getCuUserNotJwtTest");
+        log.info("테스트 끝: getUserNotJwtTest");
     }
 }
