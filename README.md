@@ -28,12 +28,13 @@
 ```properties
 # 서버 설정
 server.port=8080
+```
 
-
+### db init 
+`src/main/db/init_db.sql`  - DB 초기화 파일
 
 ###  **의존성 설치**
 Gradle을 사용하여 의존성을 설치합니다.
-
 ```bash
 ./gradlew build
 ```
